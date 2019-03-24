@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Gmail Snipper Creator</title>
+    <meta name="description" content="A tool that creates a bookmarklet usable on Gmail to insert a snippet of text.">
+
+    <meta name="theme-color" content="#3F51B5">
+
+    <link rel="shortcut icon" href="favicon.ico" />
+
+    <link rel="stylesheet" href="https://unpkg.com/material-components-web@1.0.1/dist/material-components-web.min.css">
+
+    <style>
+        :root {
+            --mdc-theme-primary: #3f51b5;
+            --mdc-theme-secondary: #f44336;
+            --mdc-theme-on-primary: #ffffff;
+            --mdc-theme-on-secondary: #ffffff;
+        }
+        
+        :root body {
+            background-color: #fafafa;
+        }
+        
+        :root body .ribbon {
+            top: 0;
+            z-index: -1;
+            background-color: #3f51b5;
+            width: 100%;
+            height: 10rem;
+            position: absolute;
+        }
+        
+        :root body .main-content {
+            background-color: #ffffff;
+            border-radius: 4px;
+            margin: 20px;
+            padding: 20px;
+            min-height: calc(100vh - 80px);
+        }
+        
+        :root body .main-content .mdc-button.mdc-button--raised {
+            background-color: #f44336;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+
+</head>
+
+<body>
+
+    <div class="ribbon mdc-elevation--z4"></div>
+    <main class="main-content mdc-typography mdc-elevation--z8">
+        <h1 class="mdc-typography--headline2">Gmail Snippet Creator</h1>
+        <p class="mdc-typography--body1">A tool that creates a bookmarklet usable on Gmail to insert a snippet of text.</p>
+        <div class="snippet--contents mdc-text-field mdc-text-field--textarea mdc-text-field--fullwidth" data-mdc-auto-init="MDCTextField">
+            <textarea id="textarea" class="mdc-text-field__input" rows="8" data-gramm_editor="false">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</textarea>
+            <div class="mdc-notched-outline">
+                <div class="mdc-notched-outline__leading"></div>
+                <div class="mdc-notched-outline__notch">
+                    <label for="textarea" class="mdc-floating-label mdc-floating-label--float-above">Snippet Contents</label>
+                </div>
+                <div class="mdc-notched-outline__trailing"></div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <a class="snippet--bookmarklet mdc-button mdc-button--raised" data-mdc-auto-init="MDCRipple" href='javascript:"https://mail.google.com"!==window.location.origin?alert("Ensure you are on https://mail.google.com"):document.querySelector(".editable")?(Array.prototype.forEach||(Array.prototype.forEach=function(a){var d,b;if(null==this)throw new TypeError("this is null or not defined");var c=Object(this),e=c.length>>>0;if("function"!==typeof a)throw new TypeError(a+" is not a function");1<arguments.length&amp;&amp;(d=arguments[1]);for(b=0;b<e;){if(b in c){var f=c[b];a.call(d,f,b,c)}b++}}),document.querySelectorAll(".editable").forEach(function(a){a.innerHTML=
+"Lorem%20ipsum%20dolor%20sit%20amet%2C%20consectetur%20adipiscing%20elit%2C%20sed%20do%20eiusmod%20tempor%20incididunt%20ut%20labore%20et%20dolore%20magna%20aliqua.jjtjtyjtyjtyjtyjtyjtyjtyjtyjtyj"+a.innerHTML})):alert("Open an email before running this bookmarklet.");'><span class="snippet--bookmarklet-name mdc-button__label">Snip: Lorem ipsum d&hellip;</span></a>
+    </main>
+
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+    <script src="https://unpkg.com/material-components-web@1.0.1/dist/material-components-web.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.slim.min.js"></script>
+
+    <script>
+        mdc.autoInit();
+
+        String.prototype.trunc = String.prototype.trunc || function(n) {
+            return this.length > n ? this.substr(0, n - 1) + "&hellip;" : this;
+        };
+
+        $(".snippet--contents textarea").on("input", function() {
+            $(".snippet--bookmarklet-name").html("Snip: ".concat($(".snippet--contents").get(0).MDCTextField.value).trunc(20));
+            $(".snippet--bookmarklet").attr("href", "javascript:\"https://mail.google.com\"!==window.location.origin?alert(\"Ensure you are on https://mail.google.com\"):document.querySelector(\".editable\")?(Array.prototype.forEach||(Array.prototype.forEach=function(a){var d,b;if(null==this)throw new TypeError(\"this is null or not defined\");var c=Object(this),e=c.length>>>0;if(\"function\"!==typeof a)throw new TypeError(a+\" is not a function\");1<arguments.length&&(d=arguments[1]);for(b=0;b<e;){if(b in c){var f=c[b];a.call(d,f,b,c)}b++}}),document.querySelectorAll(\".editable\").forEach(function(a){a.innerHTML=\n\"".concat(encodeURIComponent($(".snippet--contents").get(0).MDCTextField.value), "\"+a.innerHTML})):alert(\"Open an email before running this bookmarklet.\");"));
+        });
+    </script>
+
+</body>
+
+</html>
